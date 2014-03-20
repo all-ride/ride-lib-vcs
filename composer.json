@@ -9,6 +9,9 @@
             "email": "joris@statik.be"
         }
     ],
+    "require": {
+        "ride/lib-system": ">=0.4.1"
+    },
     "autoload": {
         "psr-0": {
             "ride\\library\\vcs\\": ["src/"]
