@@ -90,6 +90,12 @@ class GitRepository extends AbstractRepository {
      * @return null
      */
     public function create() {
+        if (!$this->workingCopy) {
+            throw new VcsException('Could not create repository: no working copy set');
+        }
+
+        $this->workingCopy->create();
+
         $this->client->execute($this, 'init');
 
         if ($this->url) {
