@@ -322,7 +322,7 @@ class GitRepository extends AbstractRepository {
         $files = (array) $files;
 
         foreach ($files as $file) {
-            $this->client->execute($this, 'rm ' . ($recursive ? '-r ' : '') . $file);
+            $this->client->execute($this, 'rm -f' . ($recursive ? 'r' : '') . ' ' . $file);
         }
     }
 
