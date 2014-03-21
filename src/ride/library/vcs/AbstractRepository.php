@@ -3,6 +3,7 @@
 namespace ride\library\vcs;
 
 use ride\library\system\file\File;
+use ride\library\vcs\exception\VcsException;
 
 /**
  * Abstract implementation for a repository of a version control system
