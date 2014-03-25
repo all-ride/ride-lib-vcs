@@ -104,11 +104,20 @@ class GitRepository extends AbstractRepository {
     }
 
     /**
-     * Performs the initial checkout of the repository to the working copy
+     * Performs a checkout of the repository to the working copy
+     * @param array $options (branch, orphan)
      * @return null
      */
-    public function checkout() {
-        $this->client->execute($this, 'clone ' . $this->url . ' ' . $this->workingCopy->getAbsolutePath());
+    public function checkout(array $options = null) {
+        $branch = isset($options['branch']) ? $options['branch'] : null;
+
+        if (!$branch || !isset($options['orphan']) || !$options['orphan']) {
+            $command = 'clone ' . ($branch ? '-b ' . $branch . ' ' : '') . $this->url . ' ' . $this->workingCopy->getAbsolutePath();
+        } else {
+            $command = 'checkout --orphan ' . $branch;
+        }
+
+        $this->client->execute($this, $command);
     }
 
     /**
@@ -189,16 +198,6 @@ class GitRepository extends AbstractRepository {
      */
     public function createBranch($branch) {
         $this->client->execute($this, 'checkout -b ' . $branch);
-    }
-
-
-    /**
-     * Checks out a specific branch
-     * @param string $branch Name of the branch
-     * @return null
-     */
-    public function checkoutBranch($branch) {
-        $this->client->execute($this, 'checkout ' . $branch);
     }
 
     /**
