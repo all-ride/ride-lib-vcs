@@ -49,9 +49,10 @@ interface Repository {
 
     /**
      * Performs the initial checkout of the repository to the working copy
+     * @param array $options
      * @return null
      */
-    public function checkout();
+    public function checkout(array $options = null);
 
     /**
      * Merges the last changes of the repository to the working copy
@@ -84,13 +85,6 @@ interface Repository {
      * @return null
      */
     public function createBranch($branch);
-
-    /**
-     * Checks out a specific branch
-     * @param string $branch Name of the branch
-     * @return null
-     */
-    public function checkoutBranch($branch);
 
     /**
      * Gets the current revision
