@@ -109,12 +109,13 @@ class GitRepository extends AbstractRepository {
      * @return null
      */
     public function checkout(array $options = null) {
-        $branch = isset($options['branch']) ? $options['branch'] : null;
-
-        if (!$branch || !isset($options['orphan']) || !$options['orphan']) {
-            $command = 'clone ' . ($branch ? '-b ' . $branch . ' ' : '') . $this->url . ' ' . $this->workingCopy->getAbsolutePath();
+        if (!$options) {
+            $command = 'clone ' . $this->url . ' ' . $this->workingCopy->getAbsolutePath();
         } else {
-            $command = 'checkout --orphan ' . $branch;
+            $branch = isset($options['branch']) ? $options['branch'] : null;
+            $isOrphan = isset($options['orphan']) && $options['orphan'];
+
+            $command = 'checkout ' . ($isOrphan ? '--orphan ' : '') . $branch;
         }
 
         $this->client->execute($this, $command);
