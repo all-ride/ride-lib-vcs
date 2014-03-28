@@ -18,7 +18,7 @@ abstract class AbstractRepository implements Repository {
 
     /**
      * Directory of the working copy
-     * @var ride\library\system\file\File
+     * @var \ride\library\system\file\File
      */
     protected $workingCopy;
 
