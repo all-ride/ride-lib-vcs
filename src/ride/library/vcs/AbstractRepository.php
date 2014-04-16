@@ -2,6 +2,7 @@
 
 namespace ride\library\vcs;
 
+use ride\library\system\exception\SystemException;
 use ride\library\system\file\File;
 use ride\library\vcs\exception\VcsException;
 
@@ -45,8 +46,10 @@ abstract class AbstractRepository implements Repository {
      * @return null
      */
     public function setWorkingCopy(File $workingCopy) {
-        if (!$workingCopy->exists()) {
-            throw new VcsException('Could not set the working directory: ' . $workingCopy . ' does not exist');
+        try {
+            $workingCopy->create();
+        } catch (SystemException $exception) {
+            throw new VcsException('Could not set the working directory: ' . $workingCopy . ' does not exist', 0, $exception);
         }
 
         if (!$workingCopy->isDirectory()) {
