@@ -134,7 +134,7 @@ class GitRepository extends AbstractRepository {
      * @return null
      */
     public function update() {
-        $this->client->execute($this, 'pull origin ' . $this->getBranch());
+        $this->client->execute($this, 'pull --all');
     }
 
     /**
