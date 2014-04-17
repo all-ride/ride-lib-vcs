@@ -109,8 +109,16 @@ class GitRepository extends AbstractRepository {
      * @return null
      */
     public function checkout(array $options = null) {
+        if (isset($options['no-checkout'])) {
+            $isNoCheckout = $options['no-checkout'];
+
+            unset($options['no-checkout']);
+        } else {
+            $isNoCheckout = false;
+        }
+
         if (!$options) {
-            $command = 'clone ' . $this->url . ' ' . $this->workingCopy->getAbsolutePath();
+            $command = 'clone ' . ($isNoCheckout ? '-n ' : '') . $this->url . ' ' . $this->workingCopy->getAbsolutePath();
         } else {
             $branch = isset($options['branch']) ? $options['branch'] : null;
             $isOrphan = isset($options['orphan']) && $options['orphan'];
@@ -173,7 +181,7 @@ class GitRepository extends AbstractRepository {
     public function getBranches() {
         $branches = array();
 
-        $output = $this->client->execute($this, 'branch --list -a');
+        $output = $this->client->execute($this, 'branch -a');
         foreach ($output as $line) {
             $branch = trim(str_replace('*', '', $line));
 
