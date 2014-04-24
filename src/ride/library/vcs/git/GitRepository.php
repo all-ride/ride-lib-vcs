@@ -140,7 +140,7 @@ class GitRepository extends AbstractRepository {
             $origin = isset($options['origin']) ? $options['origin'] : null;
             $branch = isset($options['branch']) ? $options['branch'] : null;
 
-            $command = trim('pull' . ($isAll ? ' --all' : '') . ' ' . $origin . ' ' . $branch);
+            $command = trim('pull ' . $origin . ' ' . $branch);
         }
 
         $this->client->execute($this, $command);
