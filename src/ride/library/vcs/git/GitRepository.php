@@ -133,8 +133,14 @@ class GitRepository extends AbstractRepository {
      * Merges the last changes of the repository to the working copy
      * @return null
      */
-    public function update() {
-        $this->client->execute($this, 'pull --all');
+    public function update(array $options = null) {
+        $origin = isset($options['origin']) ? $options['origin'] : null;
+        $branch = isset($options['branch']) ? $options['branch'] : null;
+        $isAll = isset($options['all']) && $options['all'];
+
+        $command = trim('pull' . ($isAll ? ' --all' : '') . ' ' . $origin . ' ' . $branch);
+
+        $this->client->execute($this, $command);
     }
 
     /**
