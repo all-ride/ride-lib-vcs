@@ -56,9 +56,10 @@ interface Repository {
 
     /**
      * Merges the last changes of the repository to the working copy
+     * @param array $options
      * @return null
      */
-    public function update();
+    public function update(array $options = null);
 
     /**
      * Gets the current branch
