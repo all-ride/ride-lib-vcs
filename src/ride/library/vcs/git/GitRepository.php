@@ -134,11 +134,14 @@ class GitRepository extends AbstractRepository {
      * @return null
      */
     public function update(array $options = null) {
-        $origin = isset($options['origin']) ? $options['origin'] : null;
-        $branch = isset($options['branch']) ? $options['branch'] : null;
-        $isAll = isset($options['all']) && $options['all'];
+        if (isset($options['all']) && $options['all']) {
+            $command = 'fetch --all';
+        } else {
+            $origin = isset($options['origin']) ? $options['origin'] : null;
+            $branch = isset($options['branch']) ? $options['branch'] : null;
 
-        $command = trim('pull' . ($isAll ? ' --all' : '') . ' ' . $origin . ' ' . $branch);
+            $command = trim('pull' . ($isAll ? ' --all' : '') . ' ' . $origin . ' ' . $branch);
+        }
 
         $this->client->execute($this, $command);
     }
@@ -166,7 +169,7 @@ class GitRepository extends AbstractRepository {
     public function getBranch() {
         $branch = 'master';
 
-        $output = $this->client->execute($this, 'branch');
+        $output = $this->client->execute($this, 'branch -a');
         foreach ($output as $line) {
             if (substr($line, 0, 1) != '*') {
                 continue;
