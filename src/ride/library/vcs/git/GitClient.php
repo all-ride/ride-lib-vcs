@@ -93,8 +93,8 @@ class GitClient {
 
             $shellCommand = $this->binary . ' ' . $command;
 
-            if (strncmp($command, 'pu', 2) === 0) {
-                // push or pull command
+            if (strncmp($command, 'pu', 2) === 0 || strncmp($command, 'fetch', 5) === 0) {
+                // push, pull or fetch command
                 $shellCommand = array(
                     'export GIT_EDITOR=:',
                     $shellCommand,
