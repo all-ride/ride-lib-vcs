@@ -1,6 +1,6 @@
 {
     "name": "ride/lib-vcs",
-    "description": "Version control library of the Ride framework",
+    "description": "Version control abstraction library of the Ride framework",
     "license": "MIT",
     "version": "0.2.8",
     "authors": [
@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "ride/lib-system": ">=0.4.1"
+        "ride/lib-system": "^1.0.0"
     },
     "autoload": {
         "psr-0": {
